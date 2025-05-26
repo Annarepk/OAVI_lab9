@@ -16,38 +16,38 @@ _Анализ шума в аудиосигналах_
 
 Функции для данной задачи находятся в файле `noise.py`.
 
--   `find_high_energy_windows(samples, sample_rate, window_duration=0.1)`
+-   `highEnergyWindows(samples, sampleRate, windowDuration=0.1)`
     > Находит временные окна с максимальной энергией сигнала.
     >
     > _ПАРАМЕТРЫ:_
     >    *   **samples** - Аудиоданные (массив numpy)
-    >    *   **sample_rate** - Частота дискретизации
-    >    *   **window_duration** - Длительность анализируемого окна (по умолчанию 0.1 сек)
+    >    *   **sampleRate** - Частота дискретизации
+    >    *   **windowDuration** - Длительность анализируемого окна (по умолчанию 0.1 сек)
     >
     > _ВОЗВРАЩАЕТ:_
-    >    *   Кортеж (max_time, times, energy_total) - время максимума, массив времен, массив энергий
+    >    *   Кортеж (maxTime, times, energyTotal) - время максимума, массив времен, массив энергий
 
--   `spectrogram_plot(samples, sample_rate, t=10000)`
+-   `spectrogram(samples, sampleRate, t=10000)`
     > Строит спектрограмму сигнала.
     >
     > _ПАРАМЕТРЫ:_
     >    *   **samples** - Аудиоданные
-    >    *   **sample_rate** - Частота дискретизации
+    >    *   **sampleRate** - Частота дискретизации
     >    *   **t** - Верхняя граница частот для отображения
 
--   `denoise(samples, sample_rate, cutoff_freuency, passes=1)`
+-   `denoise(samples, sampleRate, cutoffFreuency, passes=1)`
     > Применяет комбинированную фильтрацию (Савицкого-Голея + БИХ-фильтр).
     >
     > _ПАРАМЕТРЫ:_
     >    *   **samples** - Аудиоданные
-    >    *   **sample_rate** - Частота дискретизации
-    >    *   **cutoff_freuency** - Граничная частота фильтра
+    >    *   **sampleRate** - Частота дискретизации
+    >    *   **cutoffFreuency** - Граничная частота фильтра
     >    *   **passes** - Количество проходов фильтра
     >
     > _ВОЗВРАЩАЕТ:_
     >    *   Отфильтрованный сигнал
 
--   `to_pcm(y)`
+-   `PCM(y)`
     > Конвертирует нормализованный сигнал в PCM-формат.
     >
     > _ПАРАМЕТРЫ:_
