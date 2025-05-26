@@ -1,25 +1,25 @@
 from scipy.io import wavfile
 import matplotlib.pyplot as plt
-from noise import find_high_energy_windows, spectrogram_plot, denoise, to_pcm
+from noise import highEnergyWindows, spectrogram, denoise, PCM
 
 directory = "audio"
 inputFile = f"{directory}/music.wav"
 
 dpi = 500
 
-sample_rate, samples = wavfile.read(inputFile)
+sampleRate, samples = wavfile.read(inputFile)
 if samples.ndim > 1:
     samples = samples[:, 0]  # если стерео, берём только один канал
 
 plt.figure(dpi=dpi)
-spectrogram_plot(samples, sample_rate, 20000)
+spectrogram(samples, sampleRate, 20000)
 plt.savefig(f"{directory}/spectrogram.png", dpi=dpi)
 plt.clf()
 
 print("The spectrogram is saved...")
 
-denoised_0 = denoise(samples, sample_rate, cutoff_freuency=1000, passes=0)
-spectrogram_plot(denoised_0, sample_rate, 20000)
+denoised0 = denoise(samples, sampleRate, cutoffFreuency=1000, passes=0)
+spectrogram(denoised0, sampleRate, 20000)
 plt.savefig(f"{directory}/denoised_spectrogram_savgol.png", dpi=dpi)
 plt.clf()
 
@@ -27,25 +27,25 @@ print("The Savitsky-Goley denoised spectrogram is saved...")
 
 
 
-denoised = denoise(samples, sample_rate, cutoff_freuency=1000)
-spectrogram_plot(denoised, sample_rate)
+denoised = denoise(samples, sampleRate, cutoffFreuency=1000)
+spectrogram(denoised, sampleRate)
 plt.savefig(f"{directory}/denoised_spectrogram_once.png", dpi=dpi)
 plt.clf()
 
 
 
-wavfile.write(f"{directory}/denoised_once.wav", sample_rate, to_pcm(denoised))
+wavfile.write(f"{directory}/denoised_once.wav", sampleRate, PCM(denoised))
 
-denoised_2 = denoise(samples, sample_rate, cutoff_freuency=1000, passes=2)
-spectrogram_plot(denoised_2, sample_rate)
+denoised2 = denoise(samples, sampleRate, cutoffFreuency=1000, passes=2)
+spectrogram(denoised2, sampleRate)
 plt.savefig(f"{directory}/denoised_spectrogram_twice.png", dpi=dpi)
 plt.clf()
 
-wavfile.write(f"{directory}/denoised_twice.wav", sample_rate, to_pcm(denoised_2))
+wavfile.write(f"{directory}/denoised_twice.wav", sampleRate, PCM(denoised2))
 
 # Анализ энергии
-max_time, times, energy_total = find_high_energy_windows(samples, sample_rate)
-plt.plot(times, energy_total)
+maxTime, times, energyTotal = highEnergyWindows(samples, sampleRate)
+plt.plot(times, energyTotal)
 plt.title('Общая энергия сигнала по времени')
 plt.xlabel('Время [с]')
 plt.ylabel('Энергия')
